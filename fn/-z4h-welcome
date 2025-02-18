@@ -70,7 +70,7 @@ fi
     -z4h-flowing -i4 -- '  - Install' the recommended font from %4FPowerlevel10k%f to enable \
                         additional glyphs in the terminal:
     print
-    local url=https://github.com/romkatv/powerlevel10k/blob/master/font.md
+    local url=https://github.com/sneethe/powerlevel10k/blob/master/font.md
     url=${${url//\%/%%}//\\/\\\\}
     if (( _p9k_term_has_href )); then
       url='%{\e]8;;'$url'\a%}'$url'%{\e]8;;\a%}'

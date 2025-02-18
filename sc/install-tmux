@@ -8,7 +8,7 @@ if [ -n "${ZSH_VERSION:-}" ]; then
   emulate sh -o err_exit -o no_unset
 fi
 
-readonly url_base=https://github.com/romkatv/tmux-bin/releases/download/v3.1.0
+readonly url_base=https://github.com/sneethe/tmux-bin/releases/download/v3.1.0
 
 readonly archives='
 ---------------------
@@ -53,7 +53,7 @@ If '-u URL' is specified, download the file and install as if with
 '-f FILE'.
 
 If neither '-f' nor '-u' is specified, download the appopriate file
-from https://github.com/romkatv/tmux-bin/releases and install as if
+from https://github.com/sneethe/tmux-bin/releases and install as if
 with '-f FILE'. If '-a <sha256|md5>' is specified at least once,
 abort installation if integrity of the downloaded package cannot
 be verified with at least one of the listed hashing algorithms.
@@ -372,7 +372,7 @@ if [ -z "$file" -a -z "$url" ]; then
   if [ -n "${archives##*file:$filename;*}" ]; then
     >&2 echo "${_R}error${_0}: there is no prebuilt binary for your architecture"
     >&2 echo
-    >&2 echo "See ${_U}https://github.com/romkatv/tmux-bin#compiling${_0} for building one."
+    >&2 echo "See ${_U}https://github.com/sneethe/tmux-bin#compiling${_0} for building one."
     exit 1
   fi
 
