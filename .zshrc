@@ -50,15 +50,8 @@ zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 # Clone additional Git repositories from GitHub.
 # This doesn't do anything apart from cloning the repository and keeping it
 # up-to-date. Cloned files can be used after `z4h init`.
-function z4h-postinstall:replace-with-github-clone() {
-  [[ -n $Z4H_PACKAGE_DIR && -n $Z4H_PACKAGE_NAME ]] && 'command' -v git 1>/dev/null || return 1
-  'command' 'rm' -rf $Z4H_PACKAGE_DIR
-  'command' 'git' clone --recurse-submodules --single-branch --depth 1 https://github.com/$Z4H_PACKAGE_NAME $Z4H_PACKAGE_DIR
-}
 z4h install sneethe/zsh-abbr || return
-zstyle :z4h:sneethe/zsh-abbr postinstall z4h-postinstall:replace-with-github-clone || return
-
-z4h install sneethe/zsh-autosuggestions-abbreviations-strategy
+z4h install sneethe/zsh-autosuggestions-abbreviations-strategy || return
 
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
