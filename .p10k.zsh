@@ -1826,8 +1826,6 @@ function p10k-on-post-prompt() {
   fi
 }
 
-
-
   # Instant prompt mode.
   #
   #   - off:     Disable instant prompt. Choose this if you've tried instant prompt and found
@@ -1845,8 +1843,6 @@ function p10k-on-post-prompt() {
   # can slow down prompt by 1-2 milliseconds, so it's better to keep it turned off unless you
   # really need it.
   typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
-
-  source "$ZDOTDIR"/.yazi_p10k.zsh
 
   # If p10k is already loaded, reload configuration.
   # This works even with POWERLEVEL9K_DISABLE_HOT_RELOAD=true.
