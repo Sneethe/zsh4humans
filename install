@@ -93,138 +93,14 @@ read_choice() {
   '[' "$choice" '=' "$lf" ] || 'echo'
 }
 
->&2 'printf' 'Greetings, Human!\n'
->&2 'printf' '\n'
->&2 'printf' 'What kind of \033[1mkeyboard\033[0m are you using?\n'
->&2 'printf' '\n'
->&2 'printf' '  \033[1m(1)\033[0m  Mac. It has \033[32mOption\033[0m key(s) and does not have \033[33mAlt\033[0m.\n'
->&2 'printf' '  \033[1m(2)\033[0m  PC.  It has \033[32mAlt\033[0m key(s) and does not have \033[33mOption\033[0m.\n'
->&2 'printf' '  \033[1m(q)\033[0m  Quit and do nothing.\n'
->&2 'printf' '\n'
-while 'true'; do
-  >&2 'printf' '\033[1mChoice [12q]:\033[0m '
-  'read_choice'
-  case "$choice" in
-    '1')
-      bs_key='Delete'
-      zshrc_suffix='.mac'
-      'break'
-    ;;
-    '2')
-      bs_key='Backspace'
-      zshrc_suffix=''
-      'break'
-    ;;
-    'q'|'Q')
-      'exit' '1'
-    ;;
-    "$lf")
-    ;;
-    *)
-      >&2 'printf' '\033[33mz4h\033[0m: invalid choice: \033[31m%s\033[0m\n' "$choice"
-    ;;
-  esac
-done
-
->&2 'printf' '\n'
->&2 'printf' 'What \033[1mkeybindings\033[0m do you prefer?\n'
->&2 'printf' '\n'
->&2 'printf' '  \033[1m(1)\033[0m  Standard. I delete characters with \033[33m%s\033[0m key.\n' "$bs_key"
->&2 'printf' '  \033[1m(2)\033[0m  Like in \033[32mvi\033[0m. I delete characters with \033[33mX\033[0m key in \033[33mcommand mode\033[0m.\n'
->&2 'printf' '  \033[1m(q)\033[0m  Quit and do nothing.\n'
->&2 'printf' '\n'
-while 'true'; do
-  >&2 'printf' '\033[1mChoice [12q]:\033[0m '
-  'read_choice'
-  case "$choice" in
-    '1')
-      'break'
-    ;;
-    '2')
-      >&2 'printf' '\n'
-      >&2 'printf' 'Sorry, \033[32mvi\033[0m keybindings are \033[31mnot supported\033[0m yet.\n'
-      'exit' '1'
-      'break'
-    ;;
-    'q'|'Q')
-      'exit' '1'
-    ;;
-    "$lf")
-    ;;
-    *)
-      >&2 'printf' '\033[33mz4h\033[0m: invalid choice: \033[31m%s\033[0m\n' "$choice"
-    ;;
-  esac
-done
-
->&2 'printf' '\n'
->&2 'printf' 'Do you want \033[32mzsh\033[0m to always run in \033[32mtmux\033[0m?\n'
->&2 'printf' '\n'
->&2 'printf' '  \033[1m(y)\033[0m  Yes.\n'
->&2 'printf' '  \033[1m(n)\033[0m  No.\n'
->&2 'printf' '  \033[1m(q)\033[0m  Quit and do nothing.\n'
->&2 'printf' '\n'
-while 'true'; do
-  >&2 'printf' '\033[1mChoice [ynq]:\033[0m '
-  'read_choice'
-  case "$choice" in
-    'y'|'Y')
-      tmux='1'
-      'break'
-    ;;
-    'n'|'N')
-      tmux='0'
-      'break'
-    ;;
-    'q'|'Q')
-      'exit' '1'
-    ;;
-    "$lf")
-    ;;
-    *)
-      >&2 'printf' '\033[33mz4h\033[0m: invalid choice: \033[31m%s\033[0m\n' "$choice"
-    ;;
-  esac
-done
-
->&2 'printf' '\n'
->&2 'printf' 'Do you use \033[32mdirenv\033[0m?\n'
->&2 'printf' '\n'
->&2 'printf' '  \033[1m(y)\033[0m  Yes.\n'
->&2 'printf' '  \033[1m(n)\033[0m  No.\n'
->&2 'printf' '  \033[1m(q)\033[0m  Quit and do nothing.\n'
->&2 'printf' '\n'
-while 'true'; do
-  >&2 'printf' '\033[1mChoice [ynq]:\033[0m '
-  'read_choice'
-  case "$choice" in
-    'y'|'Y')
-      direnv='1'
-      'break'
-    ;;
-    'n'|'N')
-      direnv='0'
-      'break'
-    ;;
-    'q'|'Q')
-      'exit' '1'
-    ;;
-    "$lf")
-    ;;
-    *)
-      >&2 'printf' '\033[33mz4h\033[0m: invalid choice: \033[31m%s\033[0m\n' "$choice"
-    ;;
-  esac
-done
-
 rcs=''
-
 for f in ~/'.zshenv' ~/'.zshenv.zwc'     \
+         ~/'.config/zsh' ~/'.p10k.zsh'   \
          ~/'.zprofile' ~/'.zprofile.zwc' \
          ~/'.zshrc' ~/'.zshrc.zwc'       \
          ~/'.zlogin' ~/'.zlogin.zwc'     \
          ~/'.zlogout' ~/'.zlogout.zwc'; do
-  if '[' '-e' "$f" ']'; then
+  if '[' '-f' "$f" ']'; then
     rcs="$rcs ${f##*/}"
   fi
 done
@@ -268,7 +144,7 @@ if '[' '-n' "$rcs" ']'; then
         backup_dir=''
         'break'
       ;;
-      'q'|'Q')
+      'q' | 'Q')
         'exit' '1'
       ;;
       "$lf")
@@ -305,30 +181,32 @@ if ! err="$($fetch "$z4h" '--' "$url"/z4h.zsh 2>&1)"; then
   'exit' '1'
 fi
 
->&2 'printf' '\033[33mz4h\033[0m: generating \033[4m~/.zshenv\033[0m\n'
+>&2 'printf' '\033[33mz4h\033[0m: fetching \033[4m~/.zshenv\033[0m\n'
 if ! err="$($fetch "$zshenv" '--' "$url"/.zshenv 2>&1)"; then
   >&2 'printf' "%s\n" "$err"
   >&2 'printf' '\033[33mz4h\033[0m: failed to download \033[31m%s\033[0m\n' "$url"/.zshenv
   'exit' '1'
 fi
 
->&2 'printf' '\033[33mz4h\033[0m: generating \033[4m~/.zshrc\033[0m\n'
-if ! err="$($fetch "$zshrc" '--' "$url"/.zshrc"$zshrc_suffix" 2>&1)"; then
+>&2 'printf' '\033[33mz4h\033[0m: fetching \033[4m~/.zshrc\033[0m\n'
+if ! err="$($fetch "$zshrc" '--' "$url"/.zshrc 2>&1)"; then
   >&2 'printf' "%s\n" "$err"
-  >&2 'printf' '\033[33mz4h\033[0m: failed to download \033[31m%s\033[0m\n' "$url"/.zshrc"$zshrc_suffix"
+  >&2 'printf' '\033[33mz4h\033[0m: failed to download \033[31m%s\033[0m\n' "$url"/.zshrc
   'exit' '1'
 fi
 
-if '[' "$tmux" '=' '1' ']'; then
-  'command' 'awk' "/Mark up shell's output/ {print \"# Start tmux if not already in tmux.\"; print \"zstyle ':z4h:' start-tmux command tmux -u new -A -D -t z4h\"; print \"\"; print \"# Whether to move prompt to the bottom when zsh starts and on Ctrl+L.\"; print \"zstyle ':z4h:' prompt-at-bottom 'no'\"; print \"\"} 1" "$zshrc" >"$zshrc.bak"
-else
-  'command' 'awk' "/Mark up shell's output/ {print \"# Don't start tmux.\"; print \"zstyle ':z4h:' start-tmux       no\"; print \"\"} 1" "$zshrc" >"$zshrc.bak"
+>&2 'printf' '\033[33mz4h\033[0m: fetching \033[4m~/.p10k.zsh\033[0m\n'
+if ! err="$($fetch ".p10k.zsh" '--' "$url"/.p10k.zsh 2>&1)"; then
+  >&2 'printf' "%s\n" "$err"
+  >&2 'printf' '\033[33mz4h\033[0m: failed to download \033[31m%s\033[0m\n' "$url"/.p10k.zsh
+  'exit' '1'
 fi
-'command' 'mv' '--' "$zshrc.bak" "$zshrc"
 
-if '[' "$direnv" '=' '1' ']'; then
-  'command' 'sed' '-i.bak' '-E' "/direnv.*enable/ s/'no'/'yes'/" "$zshrc"
-  'command' 'rm' '-f' '--' "$zshrc".bak
+>&2 'printf' '\033[33mz4h\033[0m: fetching \033[4m~/.p10k\033[0m\n'
+if ! err="$($fetch ".p10k.zsh.tty" '--' "$url"/.p10k.zsh.tty 2>&1)"; then
+  >&2 'printf' "%s\n" "$err"
+  >&2 'printf' '\033[33mz4h\033[0m: failed to download \033[31m%s\033[0m\n' "$url"/.p10k.zsh.tty
+  'exit' '1'
 fi
 
 if '[' '-r' '/proc/version' ']' && 'command' 'grep' '-q' '[Mm]icrosoft' '/proc/version' 2>'/dev/null'; then
