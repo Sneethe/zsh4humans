@@ -68,10 +68,12 @@ saved_tty_settings="$('command' 'stty' '-g')"
 zshenv=''
 zshrc=''
 z4h=''
+p10k=''
+p10k_tty=''
 
 cleanup() {
   'trap' '-' 'INT' 'TERM' 'EXIT'
-  'command' 'rm' '-f' '--' "$zshenv" "$zshrc" "${zshrc:+$zshrc.bak}" "$z4h"
+  'command' 'rm' '-f' '--' "$zshenv" "$zshrc" "${zshrc:+$zshrc.bak}" "$z4h" "$p10k" "$p10k_tty"
   'command' 'stty' "$saved_tty_settings"
 }
 
@@ -95,12 +97,16 @@ read_choice() {
 
 rcs=''
 for f in ~/'.zshenv' ~/'.zshenv.zwc' \
+  ~/'.config/zsh' ~/'.p10k.zsh' \
   ~/'.zprofile' ~/'.zprofile.zwc' \
   ~/'.zshrc' ~/'.zshrc.zwc' \
   ~/'.zlogin' ~/'.zlogin.zwc' \
   ~/'.zlogout' ~/'.zlogout.zwc'; do
-  if '[' '-e' "$f" ']'; then
+  if '[' '-f' "$f" ']'; then
     rcs="$rcs ${f##*/}"
+  fi
+  if '[' '-d' "$f" ']'; then
+    rcs="$rcs ${f}"
   fi
 done
 
@@ -111,7 +117,7 @@ if '[' '-n' "$rcs" ']'; then
   if command -v 'date' >'/dev/null' 2>&1; then
     backup_dir="$backup_dir/$('command' 'date' '+%Y%m%d-%H%M%S')"
   fi
-  if [ '-e' "$HOME/$backup_dir" ]; then
+  if '[' '-e' "$HOME/$backup_dir" ']'; then
     i='1'
     while '[' '-e' "$HOME/$backup_dir.$i" ]; do
       i="$((i + 1))"
@@ -119,10 +125,10 @@ if '[' '-n' "$rcs" ']'; then
     backup_dir="$backup_dir.$i"
   fi
   >&2 'printf' '\n'
-  >&2 'printf' 'You have the following Zsh \033[1mstartup files\033[0m:\n'
+  >&2 'printf' 'You have the following Zsh \033[1mstartup files/folders\033[0m:\n'
   >&2 'printf' '\n'
   for f in $rcs; do
-    >&2 'printf' '    \033[4m~/%s\033[0m\n' "$f"
+    >&2 'printf' '    \033[4m%s\033[0m\n' "$f"
   done
   >&2 'printf' '\n'
   >&2 'printf' 'What should I do with them?\n'
@@ -159,10 +165,14 @@ if command -v 'mktemp' >'/dev/null' 2>&1; then
   zshenv="$('command' 'mktemp' "$HOME"/.zshenv.XXXXXXXXXX)"
   zshrc="$('command' 'mktemp' "$HOME"/.zshrc.XXXXXXXXXX)"
   z4h="$('command' 'mktemp' "$HOME"/.z4h.XXXXXXXXXX)"
+  p10k="$('command' 'mktemp' "$HOME"/.p10k.zsh.XXXXXXXXXX)"
+  p10k_tty="$('command' 'mktemp' "$HOME"/.p10k.zsh.tty.XXXXXXXXXX)"
 else
   zshenv="$HOME"/.zshenv.tmp."$$"
   zshrc="$HOME"/.zshrc.tmp."$$"
   z4h="$HOME"/.z4h.tmp."$$"
+  p10k="$HOME"/.p10k.zsh.tmp."$$"
+  p10k_tty="$HOME"/.p10k.zsh.tty.tmp."$$"
 fi
 
 url='https://raw.githubusercontent.com/sneethe/zsh4humans/v5'
@@ -194,14 +204,14 @@ if ! err="$($fetch "$zshrc" '--' "$url"/.zshrc 2>&1)"; then
 fi
 
 >&2 'printf' '\033[33mz4h\033[0m: fetching \033[4m~/.p10k.zsh\033[0m\n'
-if ! err="$($fetch ".p10k.zsh" '--' "$url"/.p10k.zsh 2>&1)"; then
+if ! err="$($fetch "$p10k" '--' "$url"/.p10k.zsh 2>&1)"; then
   >&2 'printf' "%s\n" "$err"
   >&2 'printf' '\033[33mz4h\033[0m: failed to download \033[31m%s\033[0m\n' "$url"/.p10k.zsh
   'exit' '1'
 fi
 
->&2 'printf' '\033[33mz4h\033[0m: fetching \033[4m~/.p10k\033[0m\n'
-if ! err="$($fetch ".p10k.zsh.tty" '--' "$url"/.p10k.zsh.tty 2>&1)"; then
+>&2 'printf' '\033[33mz4h\033[0m: fetching \033[4m~/.p10k.zsh.tty\033[0m\n'
+if ! err="$($fetch "$p10k_tty" '--' "$url"/.p10k.zsh.tty 2>&1)"; then
   >&2 'printf' "%s\n" "$err"
   >&2 'printf' '\033[33mz4h\033[0m: failed to download \033[31m%s\033[0m\n' "$url"/.p10k.zsh.tty
   'exit' '1'
@@ -212,25 +222,31 @@ if '[' '-r' '/proc/version' ']' && 'command' 'grep' '-q' '[Mm]icrosoft' '/proc/v
   'command' 'mv' '--' "$zshrc.bak" "$zshrc"
 fi
 
-Z4H="${XDG_CACHE_HOME:-$HOME/.cache}/zsh4humans/v5"
+Z4H="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/zsh4humans/v5"
+
+zdotdir='.config/zsh'
 
 'umask' 'o-w'
 
-'command' 'rm' '-rf' '--' "$Z4H"
-'command' 'mkdir' '-p' -- "$Z4H"
-
 if '[' '-n' "$backup_dir" ']'; then
   'command' 'mkdir' '-p' '--' "$backup_dir"
-  ('cd' && 'command' 'cp' '-p' '--' $rcs "$backup_dir"/) || 'exit'
+  ('cd' && 'command' 'cp' '-pr' '--' $rcs "$backup_dir"/) || 'exit'
 fi
 
 if '[' '-n' "$rcs" ']'; then
-  ('cd' && 'command' 'rm' '-f' '--' $rcs) || 'exit'
+  ('cd' && 'command' 'rm' '-rf' '--' $rcs) || 'exit'
 fi
 
-'command' 'mv' '--' "$zshenv" ~/'.zshenv'
-'command' 'mv' '--' "$zshrc" ~/'.zshrc'
+'command' 'rm' '-rf' '--' "$Z4H"
+'command' 'mkdir' '-p' '--' "$Z4H"
+
+'command' 'mv' '--' "$zshenv" ~/"$zdotdir"/.zshenv
+'command' 'mv' '--' "$zshrc" ~/"$zdotdir"/.zshrc
 'command' 'mv' '--' "$z4h" "$Z4H"/z4h.zsh
+'command' 'mv' '--' "$p10k" ~/"$zdotdir"/.p10k.zsh
+'command' 'mv' '--' "$p10k_tty" ~/"$zdotdir"/.p10k.zsh.tty
+
+printf '%s\n' "ZDOTDIR=\"\$HOME\"/${zdotdir}" 'source -- "$ZDOTDIR"/.zshenv' >"$HOME"'/.zshenv'
 
 'printf' '%s\n' "$backup_dir" >"$Z4H"/welcome
 
@@ -238,7 +254,7 @@ fi
 
 >&2 'printf' '\033[33mz4h\033[0m: bootstrapping \033[32mzsh\033[0m environment\n'
 
-'export' ZDOTDIR="$HOME"
+'export' ZDOTDIR="$HOME/$zdotdir"
 Z4H_BOOTSTRAPPING='1'
 'set' '+ue'
 'set' '--'
