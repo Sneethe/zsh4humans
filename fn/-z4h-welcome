@@ -11,12 +11,12 @@ backup_dir=$(<$Z4H/welcome) || return
 zf_rm -f -- $Z4H/welcome
 
 () {
-  [[ $POWERLEVEL9K_CONFIG_FILE != ~/.p10k.zsh ]] && return
+  [[ $POWERLEVEL9K_CONFIG_FILE != "$ZDOTDIR"/.p10k.zsh ]] && return
   [[ $POWERLEVEL9K_ICON_PADDING == none ]] || return
   [[ $POWERLEVEL9K_MODE == nerdfont-complete ]] && return
   [[ $POWERLEVEL9K_MODE == ascii ]] || return
   local cfg
-  cfg=$(<~/.p10k.zsh) || return
+  cfg=$(<"$ZDOTDIR"/.p10k.zsh) || return
   [[ $cfg == *'nerdfont-complete + powerline'* ]] || return
 }
 local -i suggest_font=$?
