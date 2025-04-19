@@ -50,9 +50,7 @@ zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 # Clone additional Git repositories from GitHub.
 # This doesn't do anything apart from cloning the repository and keeping it
 # up-to-date. Cloned files can be used after `z4h init`.
-z4h install sneethe/zsh-abbr || return
-z4h install sneethe/zsh-autosuggestions-abbreviations-strategy || return
-
+z4h install sneethe/tldr
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
@@ -60,9 +58,7 @@ z4h install sneethe/zsh-autosuggestions-abbreviations-strategy || return
 # perform network I/O must be done above. Everything else is best done below.
 z4h init || return
 
-z4h load sneethe/zsh-abbr
-z4h load sneethe/zsh-autosuggestions-abbreviations-strategy
-ZSH_AUTOSUGGEST_STRATEGY="abbreviations match_prev_cmd completion"
+ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd completion"
 
 # Extend PATH.
 path=(~/bin $path)
