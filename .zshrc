@@ -50,7 +50,7 @@ zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 # Clone additional Git repositories from GitHub.
 # This doesn't do anything apart from cloning the repository and keeping it
 # up-to-date. Cloned files can be used after `z4h init`.
-z4h install sneethe/tldr
+z4h install sneethe/tldr && ln -s "$Z4H"/sneethe/tldr/tldr $Z4H/bin 2>/dev/null
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
@@ -61,7 +61,7 @@ z4h init || return
 ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd completion"
 
 # Extend PATH.
-path=(~/bin $path)
+path=($Z4H/bin $path)
 
 # Export environment variables.
 export GPG_TTY=$TTY
