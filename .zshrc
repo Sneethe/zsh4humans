@@ -51,6 +51,7 @@ zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 # This doesn't do anything apart from cloning the repository and keeping it
 # up-to-date. Cloned files can be used after `z4h init`.
 z4h install sneethe/tldr && ln -s "$Z4H"/sneethe/tldr/tldr $Z4H/bin 2>/dev/null
+z4h install AndydeCleyre/zpy
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
@@ -73,7 +74,7 @@ z4h source ~/.env.zsh
 #
 # This is just an example that you should delete. It does nothing useful.
 # z4h source ohmyzsh/ohmyzsh/lib/diagnostics.zsh  # source an individual file
-# z4h load   ohmyzsh/ohmyzsh/plugins/emoji-clock  # load a plugin
+z4h load AndydeCleyre/zpy
 
 # Define key bindings.
 z4h bindkey z4h-backward-kill-word  Ctrl+Backspace     Ctrl+H
