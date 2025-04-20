@@ -52,6 +52,8 @@ zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 # up-to-date. Cloned files can be used after `z4h init`.
 z4h install sneethe/tldr && ln -s "$Z4H"/sneethe/tldr/tldr $Z4H/bin 2>/dev/null
 z4h install AndydeCleyre/zpy
+z4h install softmoth/zsh-vim-mode
+# TODO trial replacment of zsh-syntax-highlighting with fast-syntax-highlighting
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
@@ -75,6 +77,16 @@ z4h source ~/.env.zsh
 # This is just an example that you should delete. It does nothing useful.
 # z4h source ohmyzsh/ohmyzsh/lib/diagnostics.zsh  # source an individual file
 z4h load AndydeCleyre/zpy
+
+# Enable <Esc>-prefixed bindings that should rarely conflict with NORMAL mode
+VIM_MODE_ESC_PREFIXED_WANTED='^?^Hbdfhul.g'  # Default is '^?^Hbdf.g'
+MODE_CURSOR_VIINS="#EBDBB2 blinking bar"
+MODE_CURSOR_REPLACE="$MODE_CURSOR_VIINS #ff0000"
+MODE_CURSOR_VICMD="#EBDBB2 block"
+MODE_CURSOR_SEARCH="#ff00ff steady underline"
+MODE_CURSOR_VISUAL="$MODE_CURSOR_VICMD steady bar"
+MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL #00ffff"
+z4h load softmoth/zsh-vim-mode
 
 # Define key bindings.
 z4h bindkey z4h-backward-kill-word  Ctrl+Backspace     Ctrl+H
