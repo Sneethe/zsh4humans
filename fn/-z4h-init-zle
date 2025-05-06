@@ -288,124 +288,126 @@ for keymap in emacs viins vicmd; do
   # TODO: Add missing translations.
 done
 
+local insertkeymap
+for insertkeymap in emacs viins; do
 # Move cursor one char backward.
-bindkey   '^[[D'    backward-char                  # left
+bindkey -M $insertkeymap   '^[[D'    backward-char                  # left
 # Move cursor one char forward.
-bindkey   '^[[C'    forward-char                   # right
+bindkey -M $insertkeymap   '^[[C'    forward-char                   # right
 if (( _z4h_use[zsh-history-substring-search] )); then
   # Move cursor one line up or fetch the previous command from LOCAL history.
-  bindkey '^P'      z4h-up-substring-local         # ctrl+p
-  bindkey '^[[A'    z4h-up-substring-local         # up
+  bindkey -M $insertkeymap '^P'      z4h-up-substring-local         # ctrl+p
+  bindkey -M $insertkeymap '^[[A'    z4h-up-substring-local         # up
   # Move cursor one line down or fetch the next command from LOCAL history.
-  bindkey   '^N'    z4h-down-substring-local       # ctrl+n
-  bindkey   '^[[B'  z4h-down-substring-local       # down
+  bindkey -M $insertkeymap   '^N'    z4h-down-substring-local       # ctrl+n
+  bindkey -M $insertkeymap   '^[[B'  z4h-down-substring-local       # down
 else
   # Move cursor one line up or fetch the previous command from LOCAL history.
-  bindkey '^P'      z4h-up-prefix-local            # ctrl+p
-  bindkey '^[[A'    z4h-up-prefix-local            # up
+  bindkey -M $insertkeymap '^P'      z4h-up-prefix-local            # ctrl+p
+  bindkey -M $insertkeymap '^[[A'    z4h-up-prefix-local            # up
   # Move cursor one line down or fetch the next command from LOCAL history.
-  bindkey '^N'      z4h-down-prefix-local          # ctrl+n
-  bindkey '^[[B'    z4h-down-prefix-local          # down
+  bindkey -M $insertkeymap '^N'      z4h-down-prefix-local          # ctrl+n
+  bindkey -M $insertkeymap '^[[B'    z4h-down-prefix-local          # down
 fi
 
 # Move cursor one line up or fetch the previous command from GLOBAL history.
-bindkey   '^[[1;5A' z4h-up-prefix-global           # ctrl+up
+bindkey -M $insertkeymap   '^[[1;5A' z4h-up-prefix-global           # ctrl+up
 # Move cursor one line down or fetch the next command from GLOBAL history.
-bindkey   '^[[1;5B' z4h-down-prefix-global         # ctrl+down
+bindkey -M $insertkeymap   '^[[1;5B' z4h-down-prefix-global         # ctrl+down
 # Move cursor to the beginning of line.
-bindkey   '^[[H'    beginning-of-line              # home
+bindkey -M $insertkeymap   '^[[H'    beginning-of-line              # home
 # Move cursor to the end of line.
-bindkey   '^[[F'    end-of-line                    # end
+bindkey -M $insertkeymap   '^[[F'    end-of-line                    # end
 # Move cursor to the beginning of buffer.
-bindkey   '^[[1;5H' z4h-beginning-of-buffer        # ctrl+home
-bindkey   '^[[1;3H' z4h-beginning-of-buffer        # alt+home
+bindkey -M $insertkeymap   '^[[1;5H' z4h-beginning-of-buffer        # ctrl+home
+bindkey -M $insertkeymap   '^[[1;3H' z4h-beginning-of-buffer        # alt+home
 # Move cursor to the end of buffer.
-bindkey   '^[[1;5F' z4h-end-of-buffer              # ctrl+end
-bindkey   '^[[1;3F' z4h-end-of-buffer              # alt+end
+bindkey -M $insertkeymap   '^[[1;5F' z4h-end-of-buffer              # ctrl+end
+bindkey -M $insertkeymap   '^[[1;3F' z4h-end-of-buffer              # alt+end
 # Delete the character under the cursor.
-bindkey   '^D'      delete-char                    # ctrl+d
-bindkey   '^[[3~'   delete-char                    # delete
+bindkey -M $insertkeymap   '^D'      delete-char                    # ctrl+d
+bindkey -M $insertkeymap   '^[[3~'   delete-char                    # delete
 # Delete next word.
-bindkey   '^[d'     z4h-kill-word                  # alt+d
-bindkey   '^[D'     z4h-kill-word                  # alt+D
-bindkey   '^[[3;5~' z4h-kill-word                  # ctrl+del
-bindkey   '^[[3;3~' z4h-kill-word                  # alt+del
+bindkey -M $insertkeymap   '^[d'     z4h-kill-word                  # alt+d
+bindkey -M $insertkeymap   '^[D'     z4h-kill-word                  # alt+D
+bindkey -M $insertkeymap   '^[[3;5~' z4h-kill-word                  # ctrl+del
+bindkey -M $insertkeymap   '^[[3;3~' z4h-kill-word                  # alt+del
 # Delete previous word.
-bindkey   '^W'      z4h-backward-kill-word         # ctrl+w
-bindkey   '^[^?'    z4h-backward-kill-word         # alt+bs
-bindkey   '^[^H'    z4h-backward-kill-word         # ctrl+alt+bs
+bindkey -M $insertkeymap   '^W'      z4h-backward-kill-word         # ctrl+w
+bindkey -M $insertkeymap   '^[^?'    z4h-backward-kill-word         # alt+bs
+bindkey -M $insertkeymap   '^[^H'    z4h-backward-kill-word         # ctrl+alt+bs
 
 # Move cursor one zsh word forward.
-bindkey   '^[[1;6C' z4h-forward-zword              # ctrl+shift+right
+bindkey -M $insertkeymap   '^[[1;6C' z4h-forward-zword              # ctrl+shift+right
 # Move cursor one zsh word backward.
-bindkey   '^[[1;6D' z4h-backward-zword             # ctrl+shift+left
+bindkey -M $insertkeymap   '^[[1;6D' z4h-backward-zword             # ctrl+shift+left
 # Delete next zsh word.
-bindkey   '^[[3;6~' z4h-kill-zword                 # ctrl+shift+del
+bindkey -M $insertkeymap   '^[[3;6~' z4h-kill-zword                 # ctrl+shift+del
 
 # Delete line before cursor.
-bindkey   '^[k'     backward-kill-line             # alt+k
-bindkey   '^[K'     backward-kill-line             # alt+K
+bindkey -M $insertkeymap   '^[k'     backward-kill-line             # alt+k
+bindkey -M $insertkeymap   '^[K'     backward-kill-line             # alt+K
 # Delete all lines.
-bindkey   '^[j'     kill-buffer                    # alt+j
-bindkey   '^[J'     kill-buffer                    # alt+J
+bindkey -M $insertkeymap   '^[j'     kill-buffer                    # alt+j
+bindkey -M $insertkeymap   '^[J'     kill-buffer                    # alt+J
 # Push buffer to ephemeral history (won't be saved to HISTFILE) and delete all lines.
-bindkey   '^[o'     z4h-stash-buffer               # alt+o
-bindkey   '^[O'     z4h-stash-buffer               # alt+O
+bindkey -M $insertkeymap   '^[o'     z4h-stash-buffer               # alt+o
+bindkey -M $insertkeymap   '^[O'     z4h-stash-buffer               # alt+O
 # Accept autosuggestion.
-bindkey   '^[m'     z4h-autosuggest-accept         # alt+m
-bindkey   '^[M'     z4h-autosuggest-accept         # alt+M
+bindkey -M $insertkeymap   '^[m'     z4h-autosuggest-accept         # alt+m
+bindkey -M $insertkeymap   '^[M'     z4h-autosuggest-accept         # alt+M
 # Undo and redo.
-bindkey   '^[[Z'    undo                           # shift+tab
-bindkey   '^[/'     redo                           # alt+/
+bindkey -M $insertkeymap   '^[[Z'    undo                           # shift+tab
+bindkey -M $insertkeymap   '^[/'     redo                           # alt+/
 # Expand alias/glob/parameter.
-bindkey   '^ '      z4h-expand                     # ctrl+space
+bindkey -M $insertkeymap   '^ '      z4h-expand                     # ctrl+space
 # Generic command completion.
-bindkey   '^I'      z4h-fzf-complete               # tab
+bindkey -M $insertkeymap   '^I'      z4h-fzf-complete               # tab
 if (( _z4h_use[fzf] )); then
   # Command history.
-  bindkey '^R'      z4h-fzf-history                # ctrl+r
+  bindkey -M $insertkeymap '^R'      z4h-fzf-history                # ctrl+r
 fi
 # Show help for the command at cursor.
-bindkey   '^[h'     run-help                       # alt+h
-bindkey   '^[H'     run-help                       # alt+H
+bindkey -M $insertkeymap   '^[h'     run-help                       # alt+h
+bindkey -M $insertkeymap   '^[H'     run-help                       # alt+H
 # Do nothing (better than printing '~').
-bindkey   '^[[5~'   z4h-do-nothing                 # pageup
-bindkey   '^[[6~'   z4h-do-nothing                 # pagedown
+bindkey -M $insertkeymap   '^[[5~'   z4h-do-nothing                 # pageup
+bindkey -M $insertkeymap   '^[[6~'   z4h-do-nothing                 # pagedown
 
 # Move cursor one word backward.
-bindkey   '^[b'     z4h-backward-word              # alt+b
-bindkey   '^[B'     z4h-backward-word              # alt+B
-bindkey   '^[[1;3D' z4h-backward-word              # alt+left
-bindkey   '^[[1;5D' z4h-backward-word              # ctrl+left
+bindkey -M $insertkeymap   '^[b'     z4h-backward-word              # alt+b
+bindkey -M $insertkeymap   '^[B'     z4h-backward-word              # alt+B
+bindkey -M $insertkeymap   '^[[1;3D' z4h-backward-word              # alt+left
+bindkey -M $insertkeymap   '^[[1;5D' z4h-backward-word              # ctrl+left
 
 # Move cursor one word forward.
-bindkey   '^[f'     z4h-forward-word               # alt+f
-bindkey   '^[F'     z4h-forward-word               # alt+F
-bindkey   '^[[1;3C' z4h-forward-word               # alt+right
-bindkey   '^[[1;5C' z4h-forward-word               # ctrl+right
+bindkey -M $insertkeymap   '^[f'     z4h-forward-word               # alt+f
+bindkey -M $insertkeymap   '^[F'     z4h-forward-word               # alt+F
+bindkey -M $insertkeymap   '^[[1;3C' z4h-forward-word               # alt+right
+bindkey -M $insertkeymap   '^[[1;5C' z4h-forward-word               # ctrl+right
 
 # cd into the previous directory.
-bindkey   '^[[1;2D' z4h-cd-back                    # shift+left
+bindkey -M $insertkeymap   '^[[1;2D' z4h-cd-back                    # shift+left
 # cd into the next directory.
-bindkey   '^[[1;2C' z4h-cd-forward                 # shift+right
+bindkey -M $insertkeymap   '^[[1;2C' z4h-cd-forward                 # shift+right
 # cd into the parent directory.
-bindkey   '^[[1;2A' z4h-cd-up                      # shift+up
+bindkey -M $insertkeymap   '^[[1;2A' z4h-cd-up                      # shift+up
 if (( _z4h_use[fzf] )); then
   # cd into a subdirectory (interactive).
-  bindkey '^[[1;2B' z4h-cd-down                    # shift+down
+  bindkey -M $insertkeymap '^[[1;2B' z4h-cd-down                    # shift+down
 fi
 
 # Directory history.
-bindkey   '^[r'     z4h-fzf-dir-history            # alt+r
-bindkey   '^[R'     z4h-fzf-dir-history            # alt+R
+bindkey -M $insertkeymap   '^[r'     z4h-fzf-dir-history            # alt+r
+bindkey -M $insertkeymap   '^[R'     z4h-fzf-dir-history            # alt+R
 
 if (( _z4h_can_save_restore_screen )) &&
    zstyle -T :z4h: prompt-at-bottom; then
-  bindkey '^L'      z4h-clear-screen-soft-bottom   # ctrl+l
-  bindkey '^[^L'    z4h-clear-screen-hard-bottom   # ctrl+alt+l
+  bindkey -M $insertkeymap '^L'      z4h-clear-screen-soft-bottom   # ctrl+l
+  bindkey -M $insertkeymap '^[^L'    z4h-clear-screen-hard-bottom   # ctrl+alt+l
 else
-  bindkey '^L'      z4h-clear-screen-soft-top      # ctrl+l
-  bindkey '^[^L'    z4h-clear-screen-hard-top      # ctrl+alt+l
+  bindkey -M $insertkeymap '^L'      z4h-clear-screen-soft-top      # ctrl+l
+  bindkey -M $insertkeymap '^[^L'    z4h-clear-screen-hard-top      # ctrl+alt+l
 fi
 
 if zstyle -T :z4h:bindkey macos-option-as-alt; then
@@ -467,26 +469,28 @@ if zstyle -T :z4h:bindkey macos-option-as-alt; then
     M  'Â'
   )
 
-  bindkey '∂'            z4h-kill-word                  # opt+d
-  bindkey 'Î'            z4h-kill-word                  # opt+D
-  bindkey '˚'            backward-kill-line             # opt+k
-  bindkey '\357\243\277' backward-kill-line             # opt+K (U+F8FF)
-  bindkey '∆'            kill-buffer                    # opt+j
-  bindkey 'Ô'            kill-buffer                    # opt+J
-  bindkey 'ø'            z4h-stash-buffer               # opt+o
-  bindkey 'Ø'            z4h-stash-buffer               # opt+O
-  bindkey 'µ'            z4h-autosuggest-accept         # opt+m
-  bindkey 'Â'            z4h-autosuggest-accept         # opt+M
-  bindkey '÷'            redo                           # opt+/
-  bindkey '˙'            run-help                       # opt+h
-  bindkey 'Ó'            run-help                       # opt+H
-  bindkey '∫'            z4h-backward-word              # opt+b
-  bindkey 'ı'            z4h-backward-word              # opt+B
-  bindkey '®'            z4h-fzf-dir-history            # opt+r
-  bindkey '‰'            z4h-fzf-dir-history            # opt+R
+  bindkey -M $insertkeymap '∂'            z4h-kill-word                  # opt+d
+  bindkey -M $insertkeymap 'Î'            z4h-kill-word                  # opt+D
+  bindkey -M $insertkeymap '˚'            backward-kill-line             # opt+k
+  bindkey -M $insertkeymap '\357\243\277' backward-kill-line             # opt+K (U+F8FF)
+  bindkey -M $insertkeymap '∆'            kill-buffer                    # opt+j
+  bindkey -M $insertkeymap 'Ô'            kill-buffer                    # opt+J
+  bindkey -M $insertkeymap 'ø'            z4h-stash-buffer               # opt+o
+  bindkey -M $insertkeymap 'Ø'            z4h-stash-buffer               # opt+O
+  bindkey -M $insertkeymap 'µ'            z4h-autosuggest-accept         # opt+m
+  bindkey -M $insertkeymap 'Â'            z4h-autosuggest-accept         # opt+M
+  bindkey -M $insertkeymap '÷'            redo                           # opt+/
+  bindkey -M $insertkeymap '˙'            run-help                       # opt+h
+  bindkey -M $insertkeymap 'Ó'            run-help                       # opt+H
+  bindkey -M $insertkeymap '∫'            z4h-backward-word              # opt+b
+  bindkey -M $insertkeymap 'ı'            z4h-backward-word              # opt+B
+  bindkey -M $insertkeymap '®'            z4h-fzf-dir-history            # opt+r
+  bindkey -M $insertkeymap '‰'            z4h-fzf-dir-history            # opt+R
 else
   typeset -grA _z4h_macos_opt_key=()
 fi
+
+done
 
 if zstyle -t :z4h:bindkey keyboard mac; then
   local del=Fn+Delete
