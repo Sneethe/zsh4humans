@@ -89,16 +89,27 @@ MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL #00ffff"
 z4h load softmoth/zsh-vim-mode
 
 # Define key bindings.
-z4h bindkey z4h-backward-kill-word  Ctrl+Backspace     Ctrl+H
-z4h bindkey z4h-backward-kill-zword Ctrl+Alt+Backspace
+for keymap in viins vicmd; do
+bindkey -M $keymap '^l'      z4h-clear-screen-soft-bottom   # ctrl+l
+bindkey -M $keymap '^[^l'    z4h-clear-screen-hard-bottom   # ctrl+alt+l
 
+bindkey -M $keymap '^[o' z4h-cd-back    # cd into the previous directory
+bindkey -M $keymap '^[i' z4h-cd-forward # cd into the next directory
+bindkey -M $keymap '^[h' z4h-cd-up      # Alt+h    cd into the parent directory
+bindkey -M $keymap '^[l' z4h-cd-down    # Alt+l    cd into a child directory
+
+bindkey -M $keymap '^[[A'    z4h-up-substring-local    # up        Move cursor one line up or fetch the previous command from LOCAL history.
+bindkey -M $keymap '^[[B'    z4h-down-substring-local  # down      Move cursor one line down or fetch the next command from LOCAL history.
+bindkey -M $keymap '^[[1;5A' z4h-up-prefix-global      # Ctrl+up   Move cursor one line up or fetch the previous command from GLOBAL history.
+bindkey -M $keymap '^[[1;5B' z4h-down-prefix-global    # Ctrl+down Move cursor one line down or fetch the next command from GLOBAL history.
+bindkey -M $keymap '^[^H'    run-help                  # Ctrl+Alt+H
+done && unset keymap
+
+# bindkey -M viins '^z' undo
+# bindkey -M viins '^y' redo
 z4h bindkey undo Ctrl+/ Shift+Tab  # undo the last command line change
 z4h bindkey redo Alt+/             # redo the last undone command line change
-
-z4h bindkey z4h-cd-back    Alt+Left   # cd into the previous directory
-z4h bindkey z4h-cd-forward Alt+Right  # cd into the next directory
-z4h bindkey z4h-cd-up      Alt+Up     # cd into the parent directory
-z4h bindkey z4h-cd-down    Alt+Down   # cd into a child directory
+z4h bindkey z4h-autosuggest-accept Alt+M # Accept autosuggestion, and preserve cursor position
 
 # Autoload functions.
 autoload -Uz zmv
