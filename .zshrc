@@ -53,6 +53,7 @@ zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 z4h install sneethe/tldr && ln -s "$Z4H"/sneethe/tldr/tldr $Z4H/bin 2>/dev/null
 z4h install AndydeCleyre/zpy
 z4h install softmoth/zsh-vim-mode
+z4h install zsh-vi-more/vi-increment
 # TODO trial replacment of zsh-syntax-highlighting with fast-syntax-highlighting
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
@@ -87,6 +88,7 @@ MODE_CURSOR_SEARCH="#ff00ff steady underline"
 MODE_CURSOR_VISUAL="$MODE_CURSOR_VICMD steady bar"
 MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL #00ffff"
 z4h load softmoth/zsh-vim-mode
+z4h load zsh-vi-more/vi-increment
 
 # Define key bindings.
 for keymap in viins vicmd; do
