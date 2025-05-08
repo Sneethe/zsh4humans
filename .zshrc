@@ -14,7 +14,7 @@ zstyle ':z4h:' auto-update-days '28'
 zstyle ':z4h:bindkey' keyboard  'pc'
 
 # Start tmux if not already in tmux.
-zstyle ':z4h:' start-tmux command tmux -u new -A -D -t "$(hostname)"
+zstyle ':z4h:' start-tmux command tmux -f "$Z4H"/zsh4humans/tmux/tmux.conf -u new -A -D -t z4h
 
 # Whether to move prompt to the bottom when zsh starts and on Ctrl+L.
 zstyle ':z4h:' prompt-at-bottom 'yes'
@@ -113,6 +113,22 @@ z4h bindkey undo Ctrl+/ Shift+Tab  # undo the last command line change
 z4h bindkey redo Alt+/             # redo the last undone command line change
 z4h bindkey z4h-autosuggest-accept Alt+M # Accept autosuggestion, and preserve cursor position
 
+if [[ -n "$TMUX" ]]; then
+  function zsh_tmux_prompt_jump_prev() {
+    [[ -z "$NVIM" ]] || return
+    tmux copy-mode \; send -X previous-prompt
+  }
+  function zsh_tmux_prompt_jump_next() {
+    [[ -z "$NVIM" ]] || return
+    tmux copy-mode \; send -X next-prompt
+  }
+  zle -N zsh_tmux_prompt_jump_prev
+  zle -N zsh_tmux_prompt_jump_next
+  bindkey -M vicmd '^P' zsh_tmux_prompt_jump_prev
+  bindkey -M vicmd '^N' zsh_tmux_prompt_jump_next
+  bindkey -M viins '^P' zsh_tmux_prompt_jump_prev
+  bindkey -M viins '^N' zsh_tmux_prompt_jump_next
+fi
 # Autoload functions.
 autoload -Uz zmv
 
