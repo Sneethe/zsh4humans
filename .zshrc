@@ -131,6 +131,7 @@ if [[ -n "$TMUX" ]]; then
   bindkey -M viins '^N' zsh_tmux_prompt_jump_next
 fi
 
+# https://gist.github.com/CMCDragonkai/6084a504b6a7fee270670fc8f5887eb4
 fancy-ctrl-z () {
   if [[ $#BUFFER -eq 0 ]]; then
     BUFFER="fg"
