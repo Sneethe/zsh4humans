@@ -24,7 +24,7 @@ zstyle ':z4h:' term-shell-integration 'yes'
 
 # Right-arrow key accepts one character ('partial-accept') from
 # command autosuggestions or the whole thing ('accept')?
-zstyle ':z4h:autosuggestions' forward-char 'accept'
+zstyle ':z4h:autosuggestions' forward-char vi-forward-char 'partial-accept'
 
 # Recursively traverse directories when TAB-completing files.
 zstyle ':z4h:fzf-complete' recurse-dirs 'yes'
@@ -50,13 +50,12 @@ zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 # Clone additional Git repositories from GitHub.
 # This doesn't do anything apart from cloning the repository and keeping it
 # up-to-date. Cloned files can be used after `z4h init`.
-z4h install sneethe/tldr && ln -s "$Z4H"/sneethe/tldr/tldr $Z4H/bin 2>/dev/null
+z4h install sneethe/tldr && ln -s ${Z4H/.new.?????/}/sneethe/tldr/tldr $Z4H/bin 2>/dev/null
 z4h install AndydeCleyre/zpy
 z4h install sneethe/zsh-vim-mode
 z4h install sneethe/vi-increment
 z4h install sneethe/ex-commands
 z4h install sneethe/zsh-z
-# TODO trial replacment of zsh-syntax-highlighting with fast-syntax-highlighting
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
@@ -98,8 +97,8 @@ z4h load sneethe/zsh-z
 for keymap in viins vicmd; do
 bindkey -M $keymap '^l'      z4h-clear-screen-soft-bottom   # ctrl+l
 bindkey -M $keymap '^[^l'    z4h-clear-screen-hard-bottom   # ctrl+alt+l
-bindkey -M $keymap '^[o'     z4h-cd-back    # cd into the previous directory
-bindkey -M $keymap '^[i'     z4h-cd-forward # cd into the next directory
+bindkey -M $keymap '^[O'     z4h-cd-back    # cd into the previous directory
+bindkey -M $keymap '^[I'     z4h-cd-forward # cd into the next directory
 bindkey -M $keymap '^[h'     z4h-cd-up      # Alt+h    cd into the parent directory
 bindkey -M $keymap '^[l'     z4h-cd-down    # Alt+l    cd into a child directory
 bindkey -M $keymap '^[[A'    z4h-up-substring-local    # up        Move cursor one line up or fetch the previous command from LOCAL history.
@@ -132,6 +131,7 @@ if [[ -n "$TMUX" ]]; then
   bindkey -M viins '^N' zsh_tmux_prompt_jump_next
 fi
 
+# https://gist.github.com/CMCDragonkai/6084a504b6a7fee270670fc8f5887eb4
 fancy-ctrl-z () {
   if [[ $#BUFFER -eq 0 ]]; then
     BUFFER="fg"

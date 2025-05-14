@@ -214,7 +214,7 @@ if '[' '-r' '/proc/version' ']' && 'command' 'grep' '-q' '[Mm]icrosoft' '/proc/v
   'command' 'mv' '--' "$zshrc.bak" "$zshrc"
 fi
 
-Z4H="${XDG_CACHE_HOME:-$HOME/.cache}/zsh4humans/v5"
+Z4H="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 
 'umask' 'o-w'
 
@@ -230,9 +230,16 @@ if '[' '-n' "$rcs" ']'; then
   ('cd' && 'command' 'rm' '-f' '--' $rcs ) || 'exit'
 fi
 
-'command' 'mv' '--' "$zshenv" ~/'.zshenv'
-'command' 'mv' '--' "$zshrc" ~/'.zshrc'
-'command' 'mv' '--' "$z4h" "$Z4H"/z4h.zsh
+'command' 'rm' '-rf' '--' "$Z4H"
+'command' 'mkdir' '-p' '--' "$Z4H"
+
+'command' 'mv' '--' "$zshenv" "$Z4H/.zshenv"
+'command' 'mv' '--' "$zshrc" "$Z4H/.zshrc"
+'command' 'mv' '--' "$z4h" "$Z4H/z4h.zsh"
+'command' 'mv' '--' "$p10k" "$Z4H/.p10k.zsh"
+'command' 'mv' '--' "$p10k_tty" "$Z4H/.p10k.zsh.tty"
+
+printf '%s\n' "ZDOTDIR=${Z4H}" 'source -- "$ZDOTDIR"/.zshenv' >"$HOME"'/.zshenv'
 
 'printf' '%s\n' "$backup_dir" >"$Z4H"/welcome
 
@@ -240,7 +247,7 @@ fi
 
 >&2 'printf' '\033[33mz4h\033[0m: bootstrapping \033[32mzsh\033[0m environment\n'
 
-'export' ZDOTDIR="$HOME"
+'export' ZDOTDIR="$Z4H"
 Z4H_BOOTSTRAPPING='1'
 'set' '+ue'
 'set' '--'

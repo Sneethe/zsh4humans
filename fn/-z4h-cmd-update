@@ -66,6 +66,18 @@ local new=$Z4H.new.$$
     fi
   fi
   -z4h-mv $new $Z4H || return
+ command cp $Z4H/zsh4humans/.{zshrc,zshenv,p10k*} $Z4H || return
+if [[ -z "$( { diff --color=auto $old/.zshrc $Z4H/.zshrc 2>/dev/null || diff $old/.zshrc $Z4H/.zshrc ; } | tee /dev/tty )" ]]; then
+else
+  print -P -- '\n%Bp%b to preserve %Blocal%b %U''.zshrc%u'
+  print -Pr -- '%Benter%b to update to %Bremote%b %U''.zshrc%u (default)'
+  vared -p 'What would you like to do?: ' -c REPLY
+  case $REPLY in
+    (#i)p) command mv $old/.zshrc $Z4H 2>/dev/null ;;
+        *) ;;
+   esac
+fi
+ -z4h-mv $old/.zsh_history $Z4H
 } always {
   if (( $? )); then
     -z4h-error-command update
