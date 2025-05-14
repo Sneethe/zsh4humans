@@ -22,9 +22,8 @@ zstyle ':z4h:' prompt-at-bottom 'yes'
 # Mark up shell's output with semantic information.
 zstyle ':z4h:' term-shell-integration 'yes'
 
-# Right-arrow key accepts one character ('partial-accept') from
-# command autosuggestions or the whole thing ('accept')?
-zstyle ':z4h:autosuggestions' forward-char 'accept'
+zstyle ':z4h:autosuggestions' forward-char partial-accept
+zstyle ':z4h:autosuggestions' end-of-line  partial-accept
 
 # Recursively traverse directories when TAB-completing files.
 zstyle ':z4h:fzf-complete' recurse-dirs 'yes'
@@ -94,10 +93,12 @@ zstyle ':z4h:*' fzf-flags --cycle --highlight-line
 # Clone additional Git repositories from GitHub.
 # This doesn't do anything apart from cloning the repository and keeping it
 # up-to-date. Cloned files can be used after `z4h init`.
-z4h install sneethe/tldr && ln -s "$Z4H"/sneethe/tldr/tldr $Z4H/bin 2>/dev/null
+z4h install sneethe/tldr && ln -s ${Z4H/.new.?????/}/sneethe/tldr/tldr $Z4H/bin 2>/dev/null
 z4h install AndydeCleyre/zpy
-z4h install softmoth/zsh-vim-mode
-z4h install zsh-vi-more/vi-increment
+z4h install sneethe/zsh-vim-mode
+z4h install sneethe/vi-increment
+z4h install sneethe/ex-commands
+z4h install sneethe/zsh-z
 # TODO trial replacment of zsh-syntax-highlighting with fast-syntax-highlighting
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
