@@ -52,8 +52,10 @@ zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 # up-to-date. Cloned files can be used after `z4h init`.
 z4h install sneethe/tldr && ln -s "$Z4H"/sneethe/tldr/tldr $Z4H/bin 2>/dev/null
 z4h install AndydeCleyre/zpy
-z4h install softmoth/zsh-vim-mode
-z4h install zsh-vi-more/vi-increment
+z4h install sneethe/zsh-vim-mode
+z4h install sneethe/vi-increment
+z4h install sneethe/ex-commands
+z4h install sneethe/zsh-z
 # TODO trial replacment of zsh-syntax-highlighting with fast-syntax-highlighting
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
@@ -87,19 +89,19 @@ MODE_CURSOR_VICMD="#EBDBB2 block"
 MODE_CURSOR_SEARCH="#ff00ff steady underline"
 MODE_CURSOR_VISUAL="$MODE_CURSOR_VICMD steady bar"
 MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL #00ffff"
-z4h load softmoth/zsh-vim-mode
-z4h load zsh-vi-more/vi-increment
+z4h load sneethe/zsh-vim-mode
+z4h load sneethe/vi-increment
+z4h load sneethe/ex-commands
+z4h load sneethe/zsh-z
 
 # Define key bindings.
 for keymap in viins vicmd; do
 bindkey -M $keymap '^l'      z4h-clear-screen-soft-bottom   # ctrl+l
 bindkey -M $keymap '^[^l'    z4h-clear-screen-hard-bottom   # ctrl+alt+l
-
-bindkey -M $keymap '^[o' z4h-cd-back    # cd into the previous directory
-bindkey -M $keymap '^[i' z4h-cd-forward # cd into the next directory
-bindkey -M $keymap '^[h' z4h-cd-up      # Alt+h    cd into the parent directory
-bindkey -M $keymap '^[l' z4h-cd-down    # Alt+l    cd into a child directory
-
+bindkey -M $keymap '^[o'     z4h-cd-back    # cd into the previous directory
+bindkey -M $keymap '^[i'     z4h-cd-forward # cd into the next directory
+bindkey -M $keymap '^[h'     z4h-cd-up      # Alt+h    cd into the parent directory
+bindkey -M $keymap '^[l'     z4h-cd-down    # Alt+l    cd into a child directory
 bindkey -M $keymap '^[[A'    z4h-up-substring-local    # up        Move cursor one line up or fetch the previous command from LOCAL history.
 bindkey -M $keymap '^[[B'    z4h-down-substring-local  # down      Move cursor one line down or fetch the next command from LOCAL history.
 bindkey -M $keymap '^[[1;5A' z4h-up-prefix-global      # Ctrl+up   Move cursor one line up or fetch the previous command from GLOBAL history.
@@ -129,8 +131,21 @@ if [[ -n "$TMUX" ]]; then
   bindkey -M viins '^P' zsh_tmux_prompt_jump_prev
   bindkey -M viins '^N' zsh_tmux_prompt_jump_next
 fi
+
+fancy-ctrl-z () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line -w
+  else
+    zle self-insert
+  fi
+}
+zle -N fancy-ctrl-z
+z4h bindkey fancy-ctrl-z Ctrl+Z
+
 # Autoload functions.
-autoload -Uz zmv
+autoload -Uz zmv bracketed-paste-url-magic
+zle -N bracketed-paste bracketed-paste-url-magic
 
 # Define functions and completions.
 function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
