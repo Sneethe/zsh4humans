@@ -25,7 +25,8 @@ if '[' '-n' "${ZSH_VERSION-}" ']'; then
     'no_flow_control'        'no_prompt_bang'         'no_prompt_subst'        \
     'prompt_cr'              'prompt_percent'         'prompt_sp'              \
     'share_history'          'typeset_silent'         'hist_save_no_dups'      \
-    'no_auto_remove_slash'   'no_list_types'          'no_beep'
+    'no_auto_remove_slash'   'no_list_types'          'no_beep'                \
+    'pushd_ignore_dups'
 
   if '[' '!' '-e' "${${TMPPREFIX:-/tmp/zsh}:h}" ']'; then
     if '[' '-n' "$TMPDIR" '-a' '-d' "$TMPDIR" '-a' '-w' "$TMPDIR" ']'; then
