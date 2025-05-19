@@ -66,6 +66,7 @@ local new=$Z4H.new.$$
     fi
   fi
   -z4h-mv $new $Z4H || return
+  -z4h-mv $old/.zsh_history $Z4H
 } always {
   if (( $? )); then
     -z4h-error-command update
