@@ -781,6 +781,12 @@ if (( _z4h_use[zsh-autosuggestions] )); then
     ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=(end-of-line vi-add-eol vi-end-of-line)
   fi
 
+z4h install Aloxaf/fzf-tab
+z4h load Aloxaf/fzf-tab
+
+
+
+
   builtin source $Z4H/zsh-autosuggestions/zsh-autosuggestions.zsh
   precmd_functions=(${precmd_functions:#_zsh_autosuggest_start})
 
