@@ -98,6 +98,8 @@ z4h install AndydeCleyre/zpy
 z4h install sneethe/zsh-vim-mode
 z4h install sneethe/vi-increment
 z4h install sneethe/ex-commands
+z4h install sneethe/tpm
+z4h install sneethe/fzf-tab
 z4h install sneethe/zsh-z
 # TODO trial replacment of zsh-syntax-highlighting with fast-syntax-highlighting
 
