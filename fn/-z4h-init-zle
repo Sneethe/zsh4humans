@@ -781,7 +781,7 @@ if (( _z4h_use[zsh-autosuggestions] )); then
     ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=(end-of-line vi-add-eol vi-end-of-line)
   fi
 
-  builtin source $Z4H/zsh-autosuggestions/zsh-autosuggestions.zsh
+  # builtin source $Z4H/zsh-autosuggestions/zsh-autosuggestions.zsh
   precmd_functions=(${precmd_functions:#_zsh_autosuggest_start})
 
   _zsh_autosuggest_widget_execute() {
@@ -960,6 +960,10 @@ function -z4h-post-init() {
     -z4h-compinit
     -z4h-update-dir-history
   fi
+
+z4h load sneethe/fzf-tab
+
+builtin source $Z4H/zsh-autosuggestions/zsh-autosuggestions.zsh
 
   if (( _z4h_use[zsh-syntax-highlighting] )); then
     () {
