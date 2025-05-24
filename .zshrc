@@ -55,6 +55,7 @@ z4h install AndydeCleyre/zpy
 z4h install sneethe/zsh-vim-mode
 z4h install sneethe/vi-increment
 z4h install sneethe/ex-commands
+z4h install sneethe/tpm
 z4h install agkozak/zsh-z
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
