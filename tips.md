@@ -236,6 +236,7 @@ zstyle ':z4h:ssh:*'                   enable no
 zstyle ':z4h:ssh:example-hostname1'   enable yes
 zstyle ':z4h:ssh:*.example-hostname2' enable yes
 ```
+*NOTE*: The shell needs to be reloaded `exec zsh` for .zshrc zstyle changes to take effect.
 
 ### Extra dotfiles
 
