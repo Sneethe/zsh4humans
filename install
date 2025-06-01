@@ -161,10 +161,14 @@ if command -v 'mktemp' >'/dev/null' 2>&1; then
   zshenv="$('command' 'mktemp' "$HOME"/.zshenv.XXXXXXXXXX)"
   zshrc="$('command' 'mktemp' "$HOME"/.zshrc.XXXXXXXXXX)"
   z4h="$('command' 'mktemp' "$HOME"/.z4h.XXXXXXXXXX)"
+  p10k="$('command' 'mktemp' "$HOME"/.p10k.zsh.XXXXXXXXXX)"
+  p10k_tty="$('command' 'mktemp' "$HOME"/.p10k-ascii-8color.zsh.XXXXXXXXXX)"
 else
   zshenv="$HOME"/.zshenv.tmp."$$"
   zshrc="$HOME"/.zshrc.tmp."$$"
   z4h="$HOME"/.z4h.tmp."$$"
+  p10k="$HOME"/.p10k.zsh.tmp."$$"
+  p10k_tty="$HOME"/.p10k-ascii-8color.zsh.tmp."$$"
 fi
 
 url='https://raw.githubusercontent.com/sneethe/zsh4humans/v5'
@@ -202,10 +206,10 @@ if ! err="$($fetch ".p10k.zsh" '--' "$url"/.p10k.zsh 2>&1)"; then
   'exit' '1'
 fi
 
->&2 'printf' '\033[33mz4h\033[0m: fetching \033[4m~/.p10k\033[0m\n'
-if ! err="$($fetch ".p10k.zsh.tty" '--' "$url"/.p10k.zsh.tty 2>&1)"; then
+>&2 'printf' '\033[33mz4h\033[0m: fetching \033[4m~/.p10k-ascii-8color.zsh\033[0m\n'
+if ! err="$($fetch "$p10k_tty" '--' "$url"/.p10k-ascii-8color.zsh 2>&1)"; then
   >&2 'printf' "%s\n" "$err"
-  >&2 'printf' '\033[33mz4h\033[0m: failed to download \033[31m%s\033[0m\n' "$url"/.p10k.zsh.tty
+  >&2 'printf' '\033[33mz4h\033[0m: failed to download \033[31m%s\033[0m\n' "$url"/.p10k-ascii-8color.zsh
   'exit' '1'
 fi
 
@@ -237,7 +241,7 @@ fi
 'command' 'mv' '--' "$zshrc" "$Z4H/.zshrc"
 'command' 'mv' '--' "$z4h" "$Z4H/z4h.zsh"
 'command' 'mv' '--' "$p10k" "$Z4H/.p10k.zsh"
-'command' 'mv' '--' "$p10k_tty" "$Z4H/.p10k.zsh.tty"
+'command' 'mv' '--' "$p10k_tty" "$Z4H/.p10k-ascii-8color.zsh"
 
 printf '%s\n' "ZDOTDIR=${Z4H}" 'source -- "$ZDOTDIR"/.zshenv' >"$HOME"'/.zshenv'
 
