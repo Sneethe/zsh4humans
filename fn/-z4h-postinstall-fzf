@@ -1,5 +1,4 @@
 #!/usr/bin/env zsh
-
 eval "$_z4h_opt"
 
 if [[ -e $Z4H/.updating ]]; then
@@ -15,12 +14,12 @@ local -i installed
 
 case $uname_sm in
   'Darwin arm64')
-    local v=0.25.1
-    local url=https://github.com/zsh4humans/fzf/releases/download/$v/fzf-$v-darwin_arm8.tar.gz
+    local v=v0.62.0
+    local url=https://github.com/sneethe/fzf/releases/download/$v/fzf-$v-darwin_arm8.tar.gz
   ;;
   'Linux i686')
-    local v=0.22.0
-    local url=https://github.com/junegunn/fzf-bin/releases/download/$v/fzf-$v-linux_386.tgz
+    local v=v0.62.0
+    local url=https://github.com/sneethe/fzf/releases/download/$v/fzf-$v-linux_386.tar.gz
   ;;
   *)
     local BASH_SOURCE=($Z4H_PACKAGE_DIR/install) err
@@ -57,3 +56,5 @@ if [[ -h $Z4H_PACKAGE_DIR/bin/fzf ]]; then
   command cp -- $Z4H_PACKAGE_DIR/bin/fzf $Z4H_PACKAGE_DIR/bin/fzf.tmp || return
   zf_mv -f -- $Z4H_PACKAGE_DIR/bin/fzf.tmp $Z4H_PACKAGE_DIR/bin/fzf   || return
 fi
+
+# $Z4H_PACKAGE_DIR/bin/fzf --zsh > $Z4H_PACKAGE_DIR/fzf--zsh_fzf-key-bindings.zsh
