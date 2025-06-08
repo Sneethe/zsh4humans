@@ -26,6 +26,9 @@ if [[ $1 == */* ]]; then
       zsh-users/(zsh-syntax-highlighting|zsh-autosuggestions|zsh-history-substring-search))
         postinstall=-z4h-postinstall-zsh-users
       ;;
+      sneethe/tldr)
+        postinstall=-z4h-postinstall-tldr
+      ;;
       *)
         postinstall=
       ;;
