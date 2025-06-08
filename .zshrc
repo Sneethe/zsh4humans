@@ -50,7 +50,7 @@ zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 # Clone additional Git repositories from GitHub.
 # This doesn't do anything apart from cloning the repository and keeping it
 # up-to-date. Cloned files can be used after `z4h init`.
-z4h install sneethe/tldr && ln -s ${Z4H/.new.?????/}/sneethe/tldr/tldr $Z4H/bin 2>/dev/null
+z4h install sneethe/tldr
 z4h install AndydeCleyre/zpy
 z4h install sneethe/zsh-vim-mode
 z4h install sneethe/vi-increment
