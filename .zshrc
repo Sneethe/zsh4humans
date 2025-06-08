@@ -14,26 +14,27 @@ zstyle ':z4h:' auto-update-days '28'
 zstyle ':z4h:bindkey' keyboard  'pc'
 
 # Start tmux if not already in tmux.
+# TODO: update integrated tmux to use a small subset of plugins and allow for popup window. Look at .tmux.conf
 zstyle ':z4h:' start-tmux command tmux -f "$Z4H"/zsh4humans/tmux/tmux.conf -u new -A -D -t z4h
 
 # Whether to move prompt to the bottom when zsh starts and on Ctrl+L.
 zstyle ':z4h:' prompt-at-bottom 'yes'
+# If you are using a two-line prompt with an empty line before it, add this for smoother rendering
+# run sleep 1 to see difference, the prompt history doesn't shift up a line upon command completion, instead its upon command execution
+POSTEDIT=$'\n\n\e[2A'
 
 # Mark up shell's output with semantic information.
 zstyle ':z4h:' term-shell-integration 'yes'
+zstyle ':z4h:' propagate-cwd yes
 
 zstyle ':z4h:autosuggestions' forward-char partial-accept
 zstyle ':z4h:autosuggestions' end-of-line  partial-accept
 
-# Recursively traverse directories when TAB-completing files.
-zstyle ':z4h:fzf-complete' recurse-dirs 'yes'
-zstyle ':z4h:fzf-complete' fzf-bindings tab:repeat
-zstyle ':z4h:*' fzf-bindings tab:repeat ctrl-k:up
+# TODO: Start switching over romkatv deps (stable) to ours (dev)
+zstyle ':z4h:fzf' channel 'dev'
 
-# Enable direnv to automatically source .envrc files.
-zstyle ':z4h:direnv'         enable 'no'
-# Show "loading" and "unloading" notifications from direnv.
-zstyle ':z4h:direnv:success' notify 'yes'
+# TODO:teleportation should be configurable to allow for .config/zsh ZDOTDIR installation.
+# As well as a non-conflicting method. Where a unique dir is made for the remote Z4H and ~/.zshenv ZDOTDIR is exported upon ssh.
 
 # Enable ('yes') or disable ('no') automatic teleportation of z4h over
 # SSH when connecting to these hosts.
@@ -41,7 +42,6 @@ zstyle ':z4h:ssh:example-hostname1'   enable 'yes'
 zstyle ':z4h:ssh:*.example-hostname2' enable 'no'
 # The default value if none of the overrides above match the hostname.
 zstyle ':z4h:ssh:*'                   enable 'no'
-
 # Send these files over to the remote host when connecting over SSH to the
 # enabled hosts.
 zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
@@ -56,6 +56,13 @@ zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix https://github.com/Aloxaf/fzf-tab/pull/413
 zstyle ':completion:*' menu no
+FZF_COLORS=(
+  'fg:#d4be98,fg+:#d0d0d0,bg:#1e1e2e,bg+:#201616,'
+  'hl:#ffc44e,hl+:#fabd2f,info:#7daea3,marker:#e78a4e,'
+  'prompt:#d3869b,spinner:#89b482,pointer:#7daea3,header:#89b482,'
+  'gutter:#282828,border:#928374,preview-fg:#d4be98,preview-bg:#1a1a26,'
+  'label:#aeaeae,query:#d9d9d9'
+)
 FZF_BINDS=(
           'ctrl-v:become({_FTB_INIT_}vis "$realpath")' # Only read for fzf-tab
           'alt-j:preview-down'
@@ -74,9 +81,9 @@ FZF_BINDS=(
           'alt-s:toggle-sort'
           'ctrl-v:become(vis {+1})' # everything else will use this
           )
-zstyle ':z4h:*'     fzf-bindings ${(@)FZF_BINDS[2,-1]} 'ctrl-k:up' 'tab:repeat' 'ctrl-space:toggle'
-zstyle ':fzf-tab:*' fzf-bindings ${(@)FZF_BINDS[1,-2]} "start:transform({_FTB_INIT_}echo change-preview-window:hidden)"
-zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --highlight-line --preview-window='hidden:right:50%:wrap:cycle'
+zstyle ':z4h:*'     fzf-bindings ${(@)FZF_BINDS[2,-1]} 'ctrl-k:up' 'tab:repeat' 'ctrl-space:toggle' 'ctrl-a:beginning-of-line'
+zstyle ':fzf-tab:*' fzf-bindings ${(@)FZF_BINDS[1,-2]}
+zstyle ':fzf-tab:*' fzf-flags --color="${FZF_COLORS}" --highlight-line --preview-window='hidden:right:50%:wrap:cycle'
 zstyle ':fzf-tab:*' switch-group 'ctrl-h' 'ctrl-l'
 zstyle ':fzf-tab:*' continuous-trigger tab # TODO: fix https://github.com/Aloxaf/fzf-tab/issues/8 Z4H v3 used fzf-tab and it works
 zstyle ':fzf-tab:*' print-query ''
@@ -88,7 +95,7 @@ zstyle ':fzf-tab:*' popup-min-size 30 10 # w * h
 zstyle ':fzf-tab:*' popup-pad 0 0
 # z4h-fzf
 zstyle ':z4h:fzf-complete' recurse-dirs 'yes'
-zstyle ':z4h:*' fzf-flags --cycle --highlight-line
+zstyle ':z4h:*' fzf-flags --color="${FZF_COLORS}" --cycle --highlight-line
 
 # Clone additional Git repositories from GitHub.
 # This doesn't do anything apart from cloning the repository and keeping it
@@ -99,7 +106,8 @@ z4h install sneethe/zsh-vim-mode
 z4h install sneethe/vi-increment
 z4h install sneethe/ex-commands
 z4h install sneethe/tpm
-z4h install sneethe/fzf-tab
+z4h install sneethe/fzf-tab # TODO: Look at Z4H v3 fzf-tab integration and post-install TODO: post-install for fzf-tab-module
+z4h install sneethe/fzf-tab-source
 z4h install sneethe/zsh-z
 # TODO trial replacment of zsh-syntax-highlighting with fast-syntax-highlighting
 
@@ -112,18 +120,12 @@ z4h init || return
 ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd completion"
 
 # Extend PATH.
-path=($Z4H/bin $path)
-
-# Export environment variables.
-export GPG_TTY=$TTY
+path=($Z4H/{fzf/,}bin $path)
 
 # Source additional local files if they exist.
 z4h source ~/.env.zsh
 
 # Use additional Git repositories pulled in with `z4h install`.
-#
-# This is just an example that you should delete. It does nothing useful.
-# z4h source ohmyzsh/ohmyzsh/lib/diagnostics.zsh  # source an individual file
 z4h load AndydeCleyre/zpy
 
 # Enable <Esc>-prefixed bindings that should rarely conflict with NORMAL mode
@@ -134,8 +136,12 @@ MODE_CURSOR_VICMD="#EBDBB2 block"
 MODE_CURSOR_SEARCH="#ff00ff steady underline"
 MODE_CURSOR_VISUAL="$MODE_CURSOR_VICMD steady bar"
 MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL #00ffff"
-z4h load softmoth/zsh-vim-mode
-z4h load zsh-vi-more/vi-increment
+z4h load sneethe/zsh-vim-mode
+z4h load sneethe/vi-increment
+z4h load sneethe/ex-commands
+z4h load sneethe/zsh-z
+# fzf-tab is loaded fn/-z4h-init-zle:964
+z4h load sneethe/fzf-tab-source
 
 # Define key bindings.
 () {
@@ -157,6 +163,10 @@ bindkey -M $keymap '^P' zsh_tmux_prompt_jump_prev
 bindkey -M $keymap '^N' zsh_tmux_prompt_jump_next
 done
 }
+# If we do https://github.com/Aloxaf/fzf-tab/issues/65#issuecomment-1344970328 and https://github.com/intelfx/dotfiles/blob/master/.zshrc.d/fzf
+# Doing nvim <tab><tab>.zshrc will insert our chosen file like: nvim chosen_file .zshrc   while with z4h-fzf-complete we just spam tab until cursor moves to last file arg and then we get completion menu
+bindkey -M viins '\t\t'    z4h-fzf-complete # TODO: We should make z4h-fzf-complete, z4h-fzf-dir-history & z4h-cd-down use ftb-tmux-popup when inside tmux.
+
 z4h bindkey undo Ctrl+/ Shift+Tab  # undo the last command line change
 z4h bindkey redo Alt+/             # redo the last undone command line change
 z4h bindkey z4h-autosuggest-accept Alt+M # Accept autosuggestion, and preserve cursor position
@@ -223,12 +233,26 @@ compdef _directories md
 # Define named directories: ~w <=> Windows home directory on WSL.
 [[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
 
+# Export environment variables.
+export GPG_TTY=$TTY
+export FZF_DEFAULT_OPTS="--bind='${(j:,:)FZF_BINDS}' \
+--preview-window='hidden:right:50%:wrap:cycle' \
+--height=100 \
+--info='inline' \
+--highlight-line \
+--cycle \
+--multi \
+--ansi  \
+--color="${(j::)FZF_COLORS}" \
+--tmux"
+
 # Define aliases.
 alias tree='tree -a -I .git'
+alias clear=z4h-clear-screen-soft-bottom
 
 # Add flags to existing aliases.
 alias ls="${aliases[ls]:-ls} -A"
 
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
-setopt no_auto_menu  # require an extra TAB press to open the completion menu
+# setopt no_auto_menu  # require an extra TAB press to open the completion menu

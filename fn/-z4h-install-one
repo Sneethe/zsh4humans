@@ -52,7 +52,7 @@ else
     ;;
     1-dev)
       case $1 in
-        fzf)                          url=https://github.com/junegunn/$1/archive/master.tar.gz;;
+        fzf)                          url=https://github.com/sneethe/$1/archive/master.tar.gz;;
         powerlevel10k)                url=https://github.com/sneethe/$1/archive/master.tar.gz;;
         systemd)                      url=https://github.com/systemd/$1/archive/master.tar.gz;;
         zsh-completions)              url=https://github.com/zsh-users/$1/archive/master.tar.gz;;
