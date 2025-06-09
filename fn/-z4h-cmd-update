@@ -13,6 +13,10 @@ if (( _z4h_dangerous_root )); then
   return 1
 fi
 
+if [[ ${PWD#$Z4H} != $PWD ]] ; then
+  local cwd="${PWD}"
+fi
+
 local old=$Z4H.old.$$
 local new=$Z4H.new.$$
 
@@ -71,6 +75,7 @@ local new=$Z4H.new.$$
     -z4h-error-command update
   fi
   zf_rm -rf -- $old $new || return
+  [[ -n $cwd ]] && command cd -- $cwd
 }
 
 print -Pru2 -- "%F{3}z4h%f: %Bupdate successful%b"
