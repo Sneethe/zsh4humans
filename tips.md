@@ -83,7 +83,7 @@ starts and upon pressing <kbd>Ctrl+L</kbd>:
 zstyle ':z4h:' prompt-at-bottom 'yes'
 ```
 
-This feature requires that [`start-tmux` is not set to `no`](#tmux).
+This feature requires that [`start-tmux` is set to `yes`](#tmux).
 
 If you have a habit of running `clear` instead of pressing <kbd>Ctrl+L</kbd>,
 you can add this alias:
