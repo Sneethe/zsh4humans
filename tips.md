@@ -166,7 +166,7 @@ POSTEDIT=$'\n\e[A'
 
 You can bind `Enter` to `z4h-accept-line` to insert a newline instead of
 displaying the secondary prompt (a.k.a. `PS2`) when the currently typed
-command is incomplete.
+command is incomplete. See: [issue](https://github.com/romkatv/zsh4humans/issues/10) for more information.
 
 ```zsh
 z4h bindkey z4h-accept-line Enter
