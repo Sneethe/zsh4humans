@@ -536,7 +536,7 @@ idea execute commands with glob arguments in order to have them this way in
 history. This allows you to re-execute them even when the set of `**/*.orig`
 files changes.)
 
-Try flipping `setup no_auto_menu` to `setopt auto_menu` and see if you like it.
+Try flipping `setopt no_auto_menu` to `setopt auto_menu` and see if you like it.
 This will automatically press <kbd>Tab</kbd> for the second time when the first
 <kbd>Tab</kbd> inserts an unambiguous prefix.
 
