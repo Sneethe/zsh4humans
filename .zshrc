@@ -105,6 +105,7 @@ z4h install AndydeCleyre/zpy
 z4h install sneethe/zsh-vim-mode
 z4h install sneethe/vi-increment
 z4h install sneethe/ex-commands
+z4h install sneethe/zsh-autopair
 z4h install sneethe/tpm
 z4h install sneethe/fzf-tab # TODO: Look at Z4H v3 fzf-tab integration and post-install TODO: post-install for fzf-tab-module
 z4h install sneethe/fzf-tab-source
@@ -139,6 +140,7 @@ MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL #00ffff"
 z4h load sneethe/zsh-vim-mode
 z4h load sneethe/vi-increment
 z4h load sneethe/ex-commands
+z4h load sneethe/zsh-autopair
 z4h load sneethe/zsh-z
 # fzf-tab is loaded fn/-z4h-init-zle:964
 z4h load sneethe/fzf-tab-source
