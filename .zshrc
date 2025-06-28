@@ -101,7 +101,7 @@ zstyle ':z4h:*' fzf-flags --color="${FZF_COLORS}" --cycle --highlight-line
 # This doesn't do anything apart from cloning the repository and keeping it
 # up-to-date. Cloned files can be used after `z4h init`.
 z4h install sneethe/tldr
-z4h install AndydeCleyre/zpy
+z4h install sneethe/zpy
 z4h install sneethe/zsh-vim-mode
 z4h install sneethe/vi-increment
 z4h install sneethe/ex-commands
@@ -128,7 +128,7 @@ path=($Z4H/{fzf/,}bin $path)
 z4h source ~/.env.zsh
 
 # Use additional Git repositories pulled in with `z4h install`.
-z4h load AndydeCleyre/zpy
+z4h load sneethe/zpy
 
 # Enable <Esc>-prefixed bindings that should rarely conflict with NORMAL mode
 VIM_MODE_ESC_PREFIXED_WANTED='^?^Hbdfhul.g'  # Default is '^?^Hbdf.g'
