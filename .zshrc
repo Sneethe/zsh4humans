@@ -128,7 +128,7 @@ path=($Z4H/{fzf/,}bin $path)
 z4h source ~/.env.zsh
 
 # Use additional Git repositories pulled in with `z4h install`.
-z4h load sneethe/zpy
+z4h load -c sneethe/zpy
 
 # Enable <Esc>-prefixed bindings that should rarely conflict with NORMAL mode
 VIM_MODE_ESC_PREFIXED_WANTED='^?^Hbdfhul.g'  # Default is '^?^Hbdf.g'
@@ -138,14 +138,14 @@ MODE_CURSOR_VICMD="#EBDBB2 block"
 MODE_CURSOR_SEARCH="#ff00ff steady underline"
 MODE_CURSOR_VISUAL="$MODE_CURSOR_VICMD steady bar"
 MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL #00ffff"
-z4h load sneethe/zsh-vim-mode
-z4h load sneethe/vi-increment
-z4h load sneethe/ex-commands
-z4h load sneethe/zsh-autopair
-z4h load sneethe/zce.zsh
-z4h load sneethe/zsh-z
+z4h load -c sneethe/zsh-vim-mode
+z4h load -c sneethe/vi-increment
+z4h load -c sneethe/ex-commands
+z4h load -c sneethe/zsh-autopair
+z4h load -c sneethe/zce.zsh
+z4h load -c sneethe/zsh-z
 # fzf-tab is loaded fn/-z4h-init-zle:964
-z4h load sneethe/fzf-tab-source
+z4h load -c sneethe/fzf-tab-source
 
 # Define key bindings.
 () {

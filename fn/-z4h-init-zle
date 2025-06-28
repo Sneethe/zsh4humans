@@ -961,7 +961,7 @@ function -z4h-post-init() {
     -z4h-update-dir-history
   fi
 
-z4h load sneethe/fzf-tab
+z4h load -c sneethe/fzf-tab
 
 builtin source $Z4H/zsh-autosuggestions/zsh-autosuggestions.zsh
 
