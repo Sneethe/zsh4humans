@@ -111,6 +111,7 @@ z4h install sneethe/tpm
 z4h install sneethe/fzf-tab # TODO: Look at Z4H v3 fzf-tab integration and post-install TODO: post-install for fzf-tab-module
 z4h install sneethe/fzf-tab-source
 z4h install sneethe/zsh-z
+z4h install sneethe/fzf-marks
 # TODO trial replacment of zsh-syntax-highlighting with fast-syntax-highlighting
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
@@ -144,6 +145,7 @@ z4h load -c sneethe/ex-commands
 z4h load -c sneethe/zsh-autopair
 z4h load -c sneethe/zce.zsh
 z4h load -c sneethe/zsh-z
+z4h load -c sneethe/fzf-marks
 # fzf-tab is loaded fn/-z4h-init-zle:964
 z4h load -c sneethe/fzf-tab-source
 
