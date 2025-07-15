@@ -15,7 +15,7 @@ zstyle ':z4h:bindkey' keyboard  'pc'
 
 # Start tmux if not already in tmux.
 # TODO: update integrated tmux to use a small subset of plugins and allow for popup window. Look at .tmux.conf
-zstyle ':z4h:' start-tmux command tmux -f "$Z4H"/zsh4humans/tmux/tmux.conf -u new -A -D -t z4h
+zstyle ':z4h:' start-tmux command tmux -f "$Z4H"/zsh4humans/tmux/tmux.conf -u new -A -D -t Z4H-"$(date +%s)"
 
 # Whether to move prompt to the bottom when zsh starts and on Ctrl+L.
 zstyle ':z4h:' prompt-at-bottom 'yes'
