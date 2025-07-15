@@ -241,10 +241,23 @@ zle -N bracketed-paste bracketed-paste-url-magic
 function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
 compdef _directories md
 
+_port() {} # Gentoo
+function port() {
+  local dir=`find /var/db/repos/ -mindepth 3 -maxdepth 3 -type d -print 2> /dev/null | fzf --preview 'repo="{}" && eix --brief $(basename "$(dirname "$repo")")/$(basename "$repo")'`
+  cd "$dir"
+}
+
+function c;{echo $[$*]}
+
 # Define named directories: ~w <=> Windows home directory on WSL.
 [[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
 
 # Export environment variables.
+export EDITOR"=${${${commands[nvim]}:-${${commands[vim]}:-${${commands[vi]}:-${${commands[nano]}:-ed}}}}:t}"
+export SUDO_EDITOR="$EDITOR"
+export PAGER="moar"
+export READER="zathura"
+export FILE="yazi"
 export GPG_TTY=$TTY
 export FZF_DEFAULT_OPTS="--bind='${(j:,:)FZF_BINDS}' \
 --preview-window='hidden:right:50%:wrap:cycle' \
@@ -258,8 +271,7 @@ export FZF_DEFAULT_OPTS="--bind='${(j:,:)FZF_BINDS}' \
 --tmux"
 
 # Define aliases.
-alias tree='tree -a -I .git'
-alias clear=z4h-clear-screen-soft-bottom
+z4h source zsh4humans/aliases
 
 # Add flags to existing aliases.
 alias ls="${aliases[ls]:-ls} -A"

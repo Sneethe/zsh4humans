@@ -1,0 +1,62 @@
+#!/hint/zsh
+alias   \
+  \$="" \
+  \%="" \
+  \❯="" \
+  \❮="" \
+  ..='cd ..' \
+  ...='cd ../..' \
+  ....='cd ../../..' \
+  clear="z4h-clear-screen-soft-bottom" \
+
+alias -g \
+  f='$FILE' \
+  e='$EDITOR' \
+  g="git" \
+  ka="killall" \
+  grep="grep --color=auto" \
+  rg="rg --color=ansi" \
+  diff="diff --color=auto" \
+  ls="eza" \
+  cp="cp -iv" \
+  mv="mv -iv" \
+  rm="rm -v" \
+  mkd="mkdir -pv" \
+  cat="bat --paging=never --style=plain" \
+  rcp='rsync -raPh' \
+  rmv='rsync -raPh --remove-source-files' \
+  dd="dd status=progress" \
+  tree='tree -a -I .git' \
+  fuser="fuser -v" \
+  wgetdir="wget -r -nH --cut-dirs=2 --no-parent --reject='index.html*'" \
+  ipaddr="ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}'" \
+  make="time make -j $(nproc)" \
+
+# Handy/lazy shortcuts
+alias viddy="viddy -s"
+alias	startx='startx "$XDG_CONFIG_HOME/X11/xinitrc/.xinitrc" vt1'
+alias	endx="killall Xorg"
+alias carla="pw-jack carla"
+alias battery="cat /sys/class/power_supply/BAT?/capacity"
+alias gnome-wayland="XDG_SESSION_TYPE=wayland dbus-run-session gnome-session"
+alias	gparted="sudo -A gparted"
+
+# Utilities
+alias ccache-stats="CCACHE_DIR=/var/cache/ccache ccache -s"
+alias neofetch="fastfetch" \
+
+# ~/ Clean upmini.align
+alias units="units --history /tmp/units.history" \
+      wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"' \
+      calcurse="calcurse -C "$XDG_CONFIG_HOME"/calcurse -D "$XDG_DATA_HOME"/calcurse" # Sane conf dir
+
+alias \
+        ytmp3="yt-dlp --extract-audio --embed-thumb -f bestaudio --audio-format mp3 --add-metadata -i -o'$HOME/Music/youtube_music/%(title)s -CHANNEL: %(uploader)s -DATE: %(upload_date)s.%(ext)s' " \
+        ytmp3cwd="yt-dlp --extract-audio --embed-thumb -f bestaudio --audio-format mp3 --add-metadata -i -o'%(title)s -CHANNEL: %(uploader)s -DATE: %(upload_date)s.%(ext)s' " \
+        yt-complete="yt-dlp -f 'bestvideo[height<=?1080]+bestaudio/best'  --add-metadata --write-info-json --write-description --write-annotation --write-thumbnail -i -o'%(title)s -CHANNEL: %(uploader)s -DATE: %(upload_date)s.%(ext)s' " \
+        yt="yt-dlp -f 'bestvideo[height<=?1080]+bestaudio/best' -N 2 --sponsorblock-mark all --add-metadata -i -o'$HOME/Videos/youtube-dl/%(title)s -CHANNEL: %(uploader)s -DATE: %(upload_date)s.%(ext)s' " \
+        yt4k="yt-dlp -f 'bestvideo+bestaudio/best' -N 2 --sponsorblock-mark all --add-metadata -i -o'$HOME/Videos/youtube-dl/%(title)s -CHANNEL: %(uploader)s -DATE: %(upload_date)s.%(ext)s' " \
+        yt-shorts="yt-dlp -S proto:https -f 'bestvideo[height<=?1080]+bestaudio/best' -N 2 --sponsorblock-mark all --add-metadata -i -o'$HOME/Videos/youtube-dl/%(title)s -CHANNEL: %(uploader)s -DATE: %(upload_date)s.%(ext)s' " \
+        ytcwd="yt-dlp -f 'bestvideo[height<=?1080]+bestaudio/best' -N 2 --sponsorblock-mark all --add-metadata -i -o'%(title)s -CHANNEL: %(uploader)s -DATE: %(upload_date)s.%(ext)s' " \
+        ffmpeg='ffmpeg -hide_banner' \
+        lmms='lmms --config $XDG_CONFIG_HOME/lmmsrc.xml'
