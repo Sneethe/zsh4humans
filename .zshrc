@@ -15,7 +15,8 @@ zstyle ':z4h:bindkey' keyboard  'pc'
 
 # Start tmux if not already in tmux.
 # TODO: update integrated tmux to use a small subset of plugins and allow for popup window. Look at .tmux.conf
-zstyle ':z4h:' start-tmux command tmux -f "$Z4H"/zsh4humans/tmux/tmux.conf -u new -A -D -t Z4H-"$(date +%s)"
+export Z4H # For sourcing tmux plugins.
+zstyle ':z4h:' start-tmux command tmux -f "$Z4H"/zsh4humans/tmux.conf -u new -A -D -t Z4H-"$(date +%s)"
 
 # Whether to move prompt to the bottom when zsh starts and on Ctrl+L.
 zstyle ':z4h:' prompt-at-bottom 'yes'
@@ -116,6 +117,7 @@ z4h install sneethe/zsh-expand
 z4h install sneethe/zsh-histdb
 z4h install sneethe/zsh-histdb-fzf
 # TODO trial replacment of zsh-syntax-highlighting with fast-syntax-highlighting
+z4h install sneethe/tmux-menus
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
