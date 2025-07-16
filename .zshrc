@@ -113,6 +113,8 @@ z4h install sneethe/fzf-tab-source
 z4h install sneethe/zsh-z
 z4h install sneethe/fzf-marks
 z4h install sneethe/zsh-expand
+z4h install sneethe/zsh-histdb
+z4h install sneethe/zsh-histdb-fzf
 # TODO trial replacment of zsh-syntax-highlighting with fast-syntax-highlighting
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
@@ -121,7 +123,7 @@ z4h install sneethe/zsh-expand
 # perform network I/O must be done above. Everything else is best done below.
 z4h init || return
 
-ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd completion"
+ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd histdb_top completion"
 
 # Extend PATH.
 path=($Z4H/{fzf/,}bin $path)
@@ -148,8 +150,9 @@ z4h load -c sneethe/zce.zsh
 z4h load -c sneethe/zsh-z
 z4h load -c sneethe/fzf-marks
 z4h load -c sneethe/zsh-expand && { export ZPWR_EXPAND_SECOND_POSITION=true }
-# fzf-tab is loaded fn/-z4h-init-zle:964
-z4h load -c sneethe/fzf-tab-source
+z4h load -c sneethe/fzf-tab-source # fzf-tab is loaded fn/-z4h-init-zle:964
+z4h load -c sneethe/zsh-histdb
+z4h load -c sneethe/zsh-histdb-fzf
 
 # Define key bindings.
 () {
