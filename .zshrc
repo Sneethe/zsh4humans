@@ -118,6 +118,7 @@ z4h install sneethe/zsh-histdb
 z4h install sneethe/zsh-histdb-fzf
 # TODO trial replacment of zsh-syntax-highlighting with fast-syntax-highlighting
 z4h install sneethe/tmux-menus
+z4h install sneethe/tmux-gruvbox
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
